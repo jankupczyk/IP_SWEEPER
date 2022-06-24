@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.8.1"
+version="1.9.4"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -13,15 +13,9 @@ fg_cyan=`tput setaf 6`
 fg_white=`tput setaf 7`
 fg_def_col="\033[00m"
 
-# for sysport in `seq 0 1023`;do
-#     echo "System port ${sysport}"
-# done
-
-# for port in `seq 1024 65534`;do
-#     echo "Port ${port}"
-# done
-
 BOD=56
+PVN=110
+DV=183
 
 log=$(date +"%T")
 
@@ -30,7 +24,7 @@ printf "${fg_red}
 ╚═╗║║║║╣ ║╣ ╠═╝║╣ ╠╦╝
 ╚═╝╚╩╝╚═╝╚═╝╩  ╚═╝╩╚═v${version}
 "
-
+echo -e "\n${fg_red}Protocol version:${PVN}\nData version:${DV}${fg_white}\n"
 echo -e "\n${fg_red}Be aware that the program is in its alpha version, so there may be bugs!${fg_white}"
 echo -e "${fg_red}Ping sweep is a method that can establish a range of IP addresses which map to live hosts.${fg_white}"
 echo -e "${fg_red}Be aware that pings can be detected by protocol loggers!${fg_white}"
@@ -61,7 +55,7 @@ else
             TP=$(shuf -i 2222-9999 -n 1)
         fi
         echo -e "$IP_input.$ip --- %${result_of_ping} --- ${TP}ms --- STATE: ${mrt}"
-        ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> iplist.txt &
+        ping -c 1 $IP_input.$ip | grep -o 'ttl=[0-9][0-9]*' | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> iplist.txt &
     done
     echo -e "${fg_green}-----END SWEEPER REQUEST-----${fg_white}"
     echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
