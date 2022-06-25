@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.9.4"
+version="1.10.1"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -14,8 +14,8 @@ fg_white=`tput setaf 7`
 fg_def_col="\033[00m"
 
 BOD=56
-PVN=110
-DV=183
+PVN=176
+DV=211
 
 log=$(date +"%T")
 
@@ -29,8 +29,9 @@ echo -e "\n${fg_red}Be aware that the program is in its alpha version, so there 
 echo -e "${fg_red}Ping sweep is a method that can establish a range of IP addresses which map to live hosts.${fg_white}"
 echo -e "${fg_red}Be aware that pings can be detected by protocol loggers!${fg_white}"
 echo -e "${fg_red}Remember that you use the script at your own risk, the author is not responsible for any potential damage!${fg_white}\n\n"
+echo -e "${fg_green}Complete only the octets responsible for the network address, and leave the last one responsible for the host address empty!${fg_white}"
 echo -e "${fg_green}Enter the ip address in this format xxx.xxx.xxx${fg_white}"
-read -p "${fg_green}Provide IP: ${fg_white}" IP_input
+read -p "${fg_green}Enter IP Address: ${fg_white}" IP_input
 if [[ ${IP_input} == "" ]];then
     echo -e "${fg_red}Please provide valid IP adress!${fg_white}"
 else
