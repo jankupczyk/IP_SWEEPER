@@ -35,7 +35,10 @@ read -p "${fg_green}Enter IP Address: ${fg_white}" IP_input
 if [[ ${IP_input} == "" ]];then
     echo -e "${fg_red}Please provide valid IP adress!${fg_white}"
 else
-    echo -e "${fg_red}" && sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved
+    echo -e "\n${fg_red}Running ${0} ${fg_white}" && sleep 2s
+    echo -e "${fg_red}"
+    sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved && sudo service redis-server start
+    service --status-all
     echo -e "\n${fg_green}-----BEGIN SWEEPER REQUEST-----${fg_white}"
     echo "Generated ${log}" >> sweeperip.txt
     echo "<<--Possible addresses-->>" >> sweeperip.txt
