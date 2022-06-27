@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.10.1"
+version="1.10.2"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -37,8 +37,8 @@ if [[ ${IP_input} == "" ]];then
 else
     echo -e "${fg_red}" && sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved
     echo -e "\n${fg_green}-----BEGIN SWEEPER REQUEST-----${fg_white}"
-    echo "Generated ${log}" >> iplist.txt
-    echo "<<--Possible addresses-->>" >> iplist.txt
+    echo "Generated ${log}" >> sweeperip.txt
+    echo "<<--Possible addresses-->>" >> sweeperip.txt
 
     for ip in `seq 1 254`; do
         if ping -c1 -w3 $IP_input.$ip >/dev/null 2>&1
@@ -55,11 +55,12 @@ else
             result_of_ping=1
             TP=$(shuf -i 2222-9999 -n 1)
         fi
-        echo -e "$IP_input.$ip --- %${result_of_ping} --- ${TP}ms --- STATE: ${mrt}"
-        ping -c 1 $IP_input.$ip | grep -o 'ttl=[0-9][0-9]*' | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> iplist.txt &
+        echo -e "$IP_input.$ip --- ##${result_of_ping} --- ${TP}ms --- STATE: ${mrt}"
+        ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> sweeperip.txt &
     done
     echo -e "${fg_green}-----END SWEEPER REQUEST-----${fg_white}"
     echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
-    echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}iplist.txt${fg_green}]${fg_white}\n"
+    echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
     echo -e "${fg_green}~~Made with ${fg_magenta}❤${fg_green}  by ${author}"
+    echo -e "${fg_white}"
 fi
