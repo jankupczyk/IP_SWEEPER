@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.10.2"
+version="1.11.7"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
