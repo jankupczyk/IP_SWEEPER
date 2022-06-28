@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.11.7"
+version="1.12.0"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -51,14 +51,14 @@ else
             locate_ip=$(curl -s ipinfo.io/$IP_input.$ip | jq .country)
             mrt=ESTABLISHED
             result_of_ping=0
-            TP=$(shuf -i 15-88 -n 1)
+            TP=$(shuf -i 13-109 -n 1)
         else
             echo -e "${fg_yellow}Pinging IPSWEEPER$IP_input.$ip with ${BOD} bytes of data:${fg_white}"
             echo -e "${fg_red}Destination host unreachable; IP address is free${fg_white}" >&2
             locate_ip=$(curl -s ipinfo.io/$IP_input.$ip | jq .country)
             mrt=UNKNOWN
             result_of_ping=1
-            TP=$(shuf -i 2222-9999 -n 1)
+            TP=$(shuf -i 400-9999 -n 1)
         fi
         echo -e "$IP_input.$ip -- COUNTRY:${locate_ip} -- ${TP}ms -- STATE: ${mrt}"
         ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> sweeperip.txt &
