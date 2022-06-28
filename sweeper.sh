@@ -39,29 +39,31 @@ else
     echo -e "${fg_red}"
     sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved && sudo service redis-server start
     service --status-all
-    echo -e "\n${fg_green}-----BEGIN SWEEPER REQUEST-----${fg_white}"
+    echo -e "\n${fg_green}---------------BEGIN SWEEPER REQUEST---------------${fg_white}"
     echo "Generated ${log}" >> sweeperip.txt
     echo "<<--Possible addresses-->>" >> sweeperip.txt
 
-    for ip in `seq 1 254`; do
+    for ip in `seq 0 254`; do
         if ping -c1 -w3 $IP_input.$ip >/dev/null 2>&1
         then
-            echo -e "${fg_yellow}Pinging IPSWEEP$IP_input.$ip with ${BOD} bytes of data:${fg_white}"
+            echo -e "${fg_yellow}Pinging IPSWEEPER$IP_input.$ip with ${BOD} bytes of data:${fg_white}"
             echo -e "${fg_green}Destination host reachable; IP address is assigned${fg_white}" >&2
+            locate_ip=$(curl -s ipinfo.io/$IP_input.$ip | jq .country)
             mrt=ESTABLISHED
             result_of_ping=0
             TP=$(shuf -i 15-88 -n 1)
         else
-            echo -e "${fg_yellow}Pinging IPSWEEP$IP_input.$ip with ${BOD} bytes of data:${fg_white}"
+            echo -e "${fg_yellow}Pinging IPSWEEPER$IP_input.$ip with ${BOD} bytes of data:${fg_white}"
             echo -e "${fg_red}Destination host unreachable; IP address is free${fg_white}" >&2
+            locate_ip=$(curl -s ipinfo.io/$IP_input.$ip | jq .country)
             mrt=UNKNOWN
             result_of_ping=1
             TP=$(shuf -i 2222-9999 -n 1)
         fi
-        echo -e "$IP_input.$ip --- ##${result_of_ping} --- ${TP}ms --- STATE: ${mrt}"
+        echo -e "$IP_input.$ip -- COUNTRY:${locate_ip} -- ${TP}ms -- STATE: ${mrt}"
         ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> sweeperip.txt &
     done
-    echo -e "${fg_green}-----END SWEEPER REQUEST-----${fg_white}"
+    echo -e "${fg_green}---------------END SWEEPER REQUEST---------------${fg_white}"
     echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
     echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
     echo -e "${fg_green}~~Made with ${fg_magenta}❤${fg_green}  by ${author}"
