@@ -6,4 +6,5 @@ IP_SWEEPER is a script used to determine which hosts are active and which are no
 
 
 
-*Be aware that the program is in its alpha version, so there may be bugs!*
+
+*Be aware that the program is in its alpha version, so there may be bugs!!*
