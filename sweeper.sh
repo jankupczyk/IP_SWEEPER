@@ -65,7 +65,7 @@ else
         ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> sweeperip.txt &
     done
     echo -e "${fg_green}---------------END SWEEPER REQUEST---------------${fg_white}"
-    echo -e "${fg_red}Ending session...${fg_white}"
+    echo -e "${fg_red}Ending session...${fg_white}" && sleep 2s
     echo -e "${fg_red}Session key: ${S_KEY}${fg_white}"
     echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
     echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
