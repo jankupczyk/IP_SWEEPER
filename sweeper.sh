@@ -13,6 +13,7 @@ fg_cyan=`tput setaf 6`
 fg_white=`tput setaf 7`
 fg_def_col="\033[00m"
 
+S_KEY=$(shuf -er -n7  {A..Z} {a..z} {0..9} | tr -d '\n')
 BOD=56
 PVN=176
 DV=211
@@ -31,7 +32,7 @@ echo -e "${fg_red}Be aware that pings can be detected by protocol loggers!${fg_w
 echo -e "${fg_red}Remember that you use the script at your own risk, the author is not responsible for any potential damage!${fg_white}\n\n"
 echo -e "${fg_green}Complete only the octets responsible for the network address, and leave the last one responsible for the host address empty!${fg_white}"
 echo -e "${fg_green}Enter the ip address in this format xxx.xxx.xxx${fg_white}"
-read -p "${fg_green}Enter IP Address: ${fg_white}" IP_input
+read -p "${fg_green}Enter network address: ${fg_white}" IP_input
 if [[ ${IP_input} == "" ]];then
     echo -e "${fg_red}Please provide valid IP adress!${fg_white}"
 else
@@ -64,6 +65,8 @@ else
         ping -c 1 $IP_input.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> sweeperip.txt &
     done
     echo -e "${fg_green}---------------END SWEEPER REQUEST---------------${fg_white}"
+    echo -e "${fg_red}Ending session...${fg_white}"
+    echo -e "${fg_red}Session key: ${S_KEY}${fg_white}"
     echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
     echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
     echo -e "${fg_green}~~Made with ${fg_magenta}❤${fg_green}  by ${author}"
