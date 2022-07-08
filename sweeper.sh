@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.12.0"
+version="1.14.0"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -15,8 +15,8 @@ fg_def_col="\033[00m"
 
 S_KEY=$(shuf -er -n7  {A..Z} {a..z} {0..9} | tr -d '\n')
 BOD=56
-PVN=176
-DV=211
+PVN=189
+DV=231
 
 log=$(date +"%T")
 
