@@ -2,7 +2,7 @@
 clear
 
 author="©Jan Kupczyk"
-version="1.14.0"
+version="1.14.1"
 
 fg_red=`tput setaf 1`
 fg_green=`tput setaf 2`
@@ -14,9 +14,9 @@ fg_white=`tput setaf 7`
 fg_def_col="\033[00m"
 
 S_KEY=$(shuf -er -n7  {A..Z} {a..z} {0..9} | tr -d '\n')
-BOD=56
-PVN=189
-DV=231
+BOD=57
+PVN=190
+DV=232
 
 log=$(date +"%T")
 
@@ -31,14 +31,15 @@ echo -e "${fg_red}Ping sweep is a method that can establish a range of IP addres
 echo -e "${fg_red}Be aware that pings can be detected by protocol loggers!${fg_white}"
 echo -e "${fg_red}Remember that you use the script at your own risk, the author is not responsible for any potential damage!${fg_white}\n\n"
 echo -e "${fg_green}Complete only the octets responsible for the network address, and leave the last one responsible for the host address empty!${fg_white}"
-echo -e "${fg_green}Enter the ip address in this format xxx.xxx.xxx${fg_white}"
+echo -e "${fg_green}Enter the ip address in this format |xxx.xxx.xxx|${fg_white}"
 read -p "${fg_green}Enter network address: ${fg_white}" IP_input
 if [[ ${IP_input} == "" ]];then
     echo -e "${fg_red}Please provide valid IP adress!${fg_white}"
 else
     echo -e "\n${fg_red}Running ${0} ${fg_white}" && sleep 2s
     echo -e "${fg_red}"
-    sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved && sudo service redis-server start
+    sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved && sudo service redis-server start && sleep 2s
+    echo -e "Get all services..." && sleep 2s
     service --status-all
     echo -e "\n${fg_green}---------------BEGIN SWEEPER REQUEST---------------${fg_white}"
     echo "Generated ${log}" >> sweeperip.txt
@@ -67,7 +68,7 @@ else
     echo -e "${fg_green}---------------END SWEEPER REQUEST---------------${fg_white}"
     echo -e "${fg_red}Ending session...${fg_white}" && sleep 2s
     echo -e "${fg_red}Session key: ${S_KEY}${fg_white}"
-    echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk${fg_green}]${fg_white}"
+    echo -e "\n${fg_green}Read more about sweeper at${fg_green} [${fg_blue}https://github.com/jankupczyk/IP_SWEEPER${fg_green}]${fg_white}"
     echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
     echo -e "${fg_green}~~Made with ${fg_magenta}❤${fg_green}  by ${author}"
     echo -e "${fg_white}"
