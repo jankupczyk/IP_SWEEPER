@@ -22,7 +22,7 @@ DV=264
 
 log=$(date +"%T")
 
-DO_NOT_SCAN_IP=("6.0.0" "7.0.0" "7.0.0" "11.0.0" "21.0.0" "22.0.0" "26.0.0" "28.0.0" "29.0.0" "30.0.0" "33.0.0" "55.0.0" "205.0.0" "214.0.0" "215.0.0" "150.207.2" "140.35.155" "163.12.0" "81.160.0" "162.45.0" "195.101.232" "92.43.123" "87.54.11" "153.31.0" "192.84.170" "192.217.228" "195.10.0" "198.190.209" "205.96.0" "205.229.233" "207.43.55" "207.60.0" "209.35.0" "209.122.130" "212.159.33" "217.6.0" "194.42.114" "195.128.0" "217.243.168" "168.175.70" "168.175.170" "168.175.171" "168.175.172" "202.108.0" "195.101.232" "153.31.0" "166.64.0" "164.112.0" "165.187.0" "198.61.8" "192.190.61" "203.25.230" "192.251.207" "162.45.0" "206.212.128")
+DO_NOT_SCAN_IP=("127.0.1" "6.0.0" "7.0.0" "7.0.0" "11.0.0" "21.0.0" "22.0.0" "26.0.0" "28.0.0" "29.0.0" "30.0.0" "33.0.0" "55.0.0" "205.0.0" "214.0.0" "215.0.0" "150.207.2" "140.35.155" "163.12.0" "81.160.0" "162.45.0" "195.101.232" "92.43.123" "87.54.11" "153.31.0" "192.84.170" "192.217.228" "195.10.0" "198.190.209" "205.96.0" "205.229.233" "207.43.55" "207.60.0" "209.35.0" "209.122.130" "212.159.33" "217.6.0" "194.42.114" "195.128.0" "217.243.168" "168.175.70" "168.175.170" "168.175.171" "168.175.172" "202.108.0" "195.101.232" "153.31.0" "166.64.0" "164.112.0" "165.187.0" "198.61.8" "192.190.61" "203.25.230" "192.251.207" "162.45.0" "206.212.128")
 
 DONT_DO_THAT_header="--18 U.S. Code § 1030 - Fraud and related activity in connection with computers"
 DONT_DO_THAT_message="----DO NOT SCAN!! - What you want to do now is highly illegal and prosecutable!"
@@ -42,9 +42,7 @@ echo -e "${fg_green}Complete only the octets responsible for the network address
 echo -e "${fg_green}Enter the ip address in this format |xxx.xxx.xxx|${fg_white}"
 read -p "${fg_green}Enter network address: ${fg_white}" IP_input
 
-if [[ ${DO_NOT_SCAN_IP[*]} =~ ${IP_input} ]];then
-    echo -e "\n${bg_red}${DONT_DO_THAT_header}\n${DONT_DO_THAT_message}\n------Youre tried to ping [${IP_input}.0] address that belongs to military or gov facility!!!!!! ${fg_def_col}${fg_white}"
-else
+function IP_SWEEPER_(){
     echo -e "\n${fg_red}Running ${0} ${fg_white}" && sleep 2s
     echo -e "${fg_red}"
     sudo systemctl restart systemd-resolved && sudo systemctl stop systemd-resolved && sudo service redis-server start && sleep 2s
@@ -81,4 +79,16 @@ else
     echo -e "\n${fg_green}For more information head to${fg_green} [${fg_blue}sweeperip.txt${fg_green}]${fg_white}\n"
     echo -e "${fg_green}~~Made with ${fg_magenta}❤${fg_green}  by ${author}"
     echo -e "${fg_white}"
+}
+
+if [[ ${DO_NOT_SCAN_IP[*]} =~ ${IP_input} ]];then
+    echo -e "\n${bg_red}${DONT_DO_THAT_header}\n${DONT_DO_THAT_message}\n------Youre tried to ping [${IP_input}.0] address that belongs to military or gov facility!!!!!! ${fg_def_col}${fg_white}"
+    read -p "${fg_green}Are you sure you want to proceed? [Y/n] ${fg_white} " prcd_IP_input
+    if [[ ${prcd_IP_input} == "Y" ]];then
+        IP_SWEEPER_
+    else
+        echo -e "${fg_red}Aborted!${fg_white}"
+    fi
+else
+IP_SWEEPER_
 fi
